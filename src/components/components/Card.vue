@@ -16,17 +16,37 @@
         <div v-if="data.commit">{{data.commit.contributors}} Contributers</div>
       </div>
     </div>
+    <button v-on:click="fork">Copier sur mon profil</button>
   </div>
 </template>
 
 <script>
   import moment from 'moment';
+  import LoginStore from '../../loginStore';
 
   export default {
     name: 'card',
     props: ['data'],
     filters: {
       moment: date => moment(date).format('L'),
+    },
+    methods: {
+      fork: function () {
+        const gh = new GitHub({
+          token: LoginStore.state.token,
+        });
+        console.log(this);
+        const remoteRepo = gh.getRepo(this.data.creator, "test");
+        if (remoteRepo) {
+            console.log(remoteRepo.fork());
+         /* if (remoteRepo.fork()){
+          }else{
+            console.log(remoteRepo.fork());
+          }*/
+        } else {
+          console.log('error');
+        }
+      }
     },
   };
 </script>
