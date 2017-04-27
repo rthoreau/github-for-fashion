@@ -31,22 +31,22 @@
       moment: date => moment(date).format('L'),
     },
     methods: {
-      fork: function () {
+      fork() {
         const gh = new GitHub({
           token: LoginStore.state.token,
         });
         console.log(this);
-        const remoteRepo = gh.getRepo(this.data.creator, "test");
+        const remoteRepo = gh.getRepo(this.data.creator, 'test');
         if (remoteRepo) {
-            console.log(remoteRepo.fork());
-         /* if (remoteRepo.fork()){
+          console.log(remoteRepo.fork());
+          /* if (remoteRepo.fork()){
           }else{
             console.log(remoteRepo.fork());
           }*/
         } else {
           console.log('error');
         }
-      }
+      },
     },
   };
 </script>
