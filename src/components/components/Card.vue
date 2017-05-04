@@ -15,21 +15,44 @@
       <div class="mdc-card__supporting-text">
         <div v-if="data.commit">{{data.commit.contributors}} Contributers</div>
       </div>
+      <button v-if="user.login && data.creator !== user.login" v-on:click="fork">Copier sur mon profil</button>
     </div>
     <button v-on:click="fork">Copier sur mon profil</button>
   </div>
 </template>
 
 <script>
-  import moment from 'moment';
-  import LoginStore from '../../loginStore';
+import moment from 'moment';
+import GitHub from 'github-api';
+import LoginStore from '../../loginStore';
+import router from '../../router';
+import EventBus from '../../eventBus';
 
-  export default {
-    name: 'card',
-    props: ['data'],
-    filters: {
-      moment: date => moment(date).format('L'),
+export default {
+  name: 'card',
+  props: ['data'],
+  filters: {
+    moment: date => moment(date).format('L'),
+  },
+  data() {
+    return {
+      user: LoginStore.state,
+    };
+  },
+  methods: {
+    fork() {
+      const gh = new GitHub({
+        token: this.user.token,
+      });
+      const remoteRepo = gh.getRepo(this.data.creator, this.data.title);
+      remoteRepo.fork()
+      .then(() => {
+        router.push({ name: 'Garment Detail', params: { user: this.user.login, repo: this.data.title } });
+      }).catch((error) => {
+        EventBus.$emit('showError', error);
+      });
     },
+<<<<<<< HEAD
     methods: {
       fork() {
         const gh = new GitHub({
@@ -49,6 +72,10 @@
       },
     },
   };
+=======
+  },
+};
+>>>>>>> be4427b6f3b76468a26030be5e760800ba8cf40d
 </script>
 
 <style>
