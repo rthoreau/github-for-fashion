@@ -17,7 +17,6 @@
       </div>
       <button v-if="user.login && data.creator !== user.login" v-on:click="fork">Copier sur mon profil</button>
     </div>
-    <button v-on:click="fork">Copier sur mon profil</button>
   </div>
 </template>
 
