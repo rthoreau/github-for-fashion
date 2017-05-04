@@ -52,30 +52,9 @@ export default {
         EventBus.$emit('showError', error);
       });
     },
-<<<<<<< HEAD
-    methods: {
-      fork() {
-        const gh = new GitHub({
-          token: LoginStore.state.token,
-        });
-        console.log(this);
-        const remoteRepo = gh.getRepo(this.data.creator, 'test');
-        if (remoteRepo) {
-          console.log(remoteRepo.fork());
-          /* if (remoteRepo.fork()){
-          }else{
-            console.log(remoteRepo.fork());
-          }*/
-        } else {
-          console.log('error');
-        }
-      },
-    },
-  };
-=======
+
   },
 };
->>>>>>> be4427b6f3b76468a26030be5e760800ba8cf40d
 </script>
 
 <style>
